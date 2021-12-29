@@ -1,22 +1,7 @@
-import socket
+import requests
 
-HOST = '127.0.0.1'  
-PORT = 8000        
+#the required first parameter of the 'get' method is the 'url':
+x = requests.get('https://w3schools.com/python/demopage.htm')
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server_address = (HOST, PORT)
-print('connecting to %s port ' + str(server_address))
-s.connect(server_address)
-
-try:
-    while True:
-       msg = input('Client: ')
-        s.sendall(bytes(msg, "utf8"))
-
-        if msg == "quit":
-            break
-
-        data = s.recv(1024)
-        print('Server: ', data.decode("utf8"))
-finally:
-    s.close() 
+#print the response text (the content of the requested file):
+print(x.text)

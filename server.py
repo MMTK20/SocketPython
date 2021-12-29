@@ -12,7 +12,7 @@ while True:
     
     try:
         print('Connected by', addr)
-        whil True:
+        while True:
             data = client.recv(1024)
             str_data = data.decode("utf8")
             if str_data == "quit":
@@ -27,4 +27,4 @@ while True:
     finally:
         client.close()
 
-s.close()e
+s.close()
