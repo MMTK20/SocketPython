@@ -3,14 +3,11 @@ from tkinter import  StringVar, messagebox
 from tkinter import ttk
 import re
 from tkinter.constants import END
-import socket
+import server as s
 
-
-#Đóng gói hàm lại, không gọi hàm ở ngoài như thế này
 window = gold.Tk()
 
 window.title("Johny Dang & Co. Server")
-
 window.geometry("720x480")
 window.resizable(width=False, height=False)
 window.iconbitmap('gold.ico')
@@ -18,34 +15,40 @@ window.iconbitmap('gold.ico')
 
 frame2 = gold.Frame(window)
 
-HOST = socket.gethostbyname(socket.gethostname())
-PORT = 3702
-# Thoát chương trình
-def close_App():
-    if messagebox.askokcancel("Quit", "Do you want to quit?"):
+def close_App(server):
+    if messagebox.askokcancel("Exit", "Do you want to exit?"):
+        s.closeServer(server)
         window.destroy()
 
-# trang chính
 def homePage():
+    sThread = s.threading.Thread(target=s.Start)
+    sThread.daemon = True 
+    sThread.start() 
+
+    def seeConnection():
+        board.delete(0, len(s.client_online))
+        for i in range(len(s.client_online)):
+            board.insert(i, s.client_online[i])
 
     frame2.pack(fill="both", expand=1)
-    page_name = gold.Label(frame2, text="SERVER", font=("Times new roman",20, "bold"), foreground="orange")
-    page_name.place(x=270)
+    page_name = gold.Label(frame2, text="Gold Price (server)", font=("Times new roman",23, "bold"), foreground="orange")
+    page_name.place(x=234, y=11)
     
-    quit_button = gold.Button(frame2, text='Quit',width=10, command=lambda:close_App())
-    quit_button.place(x=600,y = 10)
+    quit_button = gold.Button(frame2, text='Exit', bg='red', width=10, command=lambda:close_App(s.s))
+    quit_button.place(x=617,y = 430)
     
-    user_info = gold.Label(frame2, text=("Server: " + str(HOST) + "  -  " + str(PORT)))
-    user_info.place(x=240, y=55)
-    refresh_button = gold.Button(frame2,text = 'REFRESH', bg='orange',width=15)
-    refresh_button.place(x = 280, y=430)
+    user_info = gold.Label(frame2, text=("Server IP: " + str(s.HOST) + "   Port: " + str(s.PORT)))
+    user_info.place(x=10, y=450)
+
+    refresh_button = gold.Button(frame2,text = "Reload", bg='orange',width=8,command=seeConnection)
+    refresh_button.place(x = 632, y=51) 
     
-    global txt
-    txt = gold.Listbox(frame2,font = ("Times new roman",15), width=45, height=12)
-    scrollbar  = gold.Scrollbar(frame2, orient="vertical", command=txt.yview)
-    txt['yscroll'] = scrollbar.set
-    scrollbar.place(in_=txt, relx=1.0, relheight=1.0, bordermode="outside")
-    txt.place(x=100, y=80)
+    global board
+    board = gold.Listbox(frame2,font = ("Times new roman",15), width=69, height=14)
+    scrollbar  = gold.Scrollbar(frame2, orient="vertical", command=board.yview)
+    board['yscroll'] = scrollbar.set
+    scrollbar.place(in_=board, relx=1.0, relheight=1.0, bordermode="outside")
+    board.place(x=5, y=80)
 
 homePage()
 

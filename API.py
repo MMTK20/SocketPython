@@ -13,5 +13,4 @@ value = golds['value']
 
 for i in value:
         goldType.append(i['type'])
-        print(i['type'])
 
