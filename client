@@ -14,13 +14,18 @@ def sendMessage(client):
 
 
 def startConnect():
-    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    hostServer = input("Sign in Host server : ")
-    print("Try to connect ", hostServer, " on Port ", PORT)
-    addressHost=(hostServer,PORT)
-    client.connect(address)
-    print("Success connected")
-    sendMessage(client)
-    client.close()
+        client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        hostServer = input("Sign in Host server : ")
+        print("Try to connect ", hostServer, " on Port ", PORT)
+        if(hostServer != HOST):
+            print("WrongIP")
+            return
+        else:
+            addressHost=(hostServer,PORT)
+            client.connect(addressHost)
+            print("Success connected")
+            sendMessage(client)
+            client.close()
 
 startConnect()
+
