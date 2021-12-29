@@ -7,7 +7,7 @@ import datetime
 import re
 
 #Convert to utf-8 code
-def UTFDECODE(s):
+def UTF_ENCODE(s):
     s = re.sub(r'[àáạảãâầấậẩẫăằắặẳẵ]', 'a', s)
     s = re.sub(r'[ÀÁẠẢÃĂẰẮẶẲẴÂẦẤẬẨẪ]', 'A', s)
     s = re.sub(r'[èéẹẻẽêềếệểễ]', 'e', s)
@@ -64,7 +64,7 @@ def CallApi():
    #Storage JSON file
    with open('data.json','w',encoding='ascii') as outfile:
       json_file = json.dumps(y,indent=4,ensure_ascii=False)
-      outfile.write(UTFDECODE(json_file))
+      outfile.write(UTF_ENCODE(json_file))
 
    #Load JSON file
    with open('data.json') as json_file:
