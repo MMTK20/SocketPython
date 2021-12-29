@@ -59,6 +59,7 @@ def CallApi():
 
    #Decode response to convert to JSON
    decoded_data = x.text.encode().decode('utf-8-sig')
+   print(type(decoded_data))
    y = json.loads(decoded_data)
 
    #Storage JSON file
@@ -77,5 +78,7 @@ def CallApi():
    GOLDS = data['golds']
 
 CallApi()
+
+print(RATES)
 
 

@@ -25,7 +25,7 @@ data = {
                     "code": "AVPL /  CT bu\u00f4n"
                 }
 
-print(data["buy"])
+print(type(data))
 username = input("Username: ")
 password = input("Password: ")
 
