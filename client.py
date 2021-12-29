@@ -19,7 +19,7 @@ def startConnect():
         print("Try to connect ", hostServer, " on Port ", PORT)
         if(hostServer != HOST):
             print("WrongIP")
-            return
+            return startConnect()
         else:
             addressHost=(hostServer,PORT)
             client.connect(addressHost)
