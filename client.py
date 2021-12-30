@@ -1,9 +1,8 @@
 import socket
 
-HOST = "127.0.0.1" 
+
 PORT = 3702        
 FORMAT = "utf-8"
-address = (HOST,PORT)
 
 def sendMessage(client,option,list):
     client.sendall(option.encode(FORMAT))
@@ -51,18 +50,23 @@ def sendList(client,list):
     return msgServer
 
 
-def startConnect():
+def startConnect(IPserver):
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    try:
-        print("Client Side")
-        addressHost=(HOST, PORT)
-        client.connect(address)
-        print("Client: ",client.getsockname())
-        print("Success connected")
-        return client
-    except:
-        print("Connect unsucessful")
-        closeConnection(client)
+    IPclient = socket.gethostbyname(socket.gethostname())
+    if(IPserver==IPclient):
+        try:
+            print("Client Side")
+            addressHost=(IPserver, PORT)
+            client.connect(addressHost)
+            print("Client: ",client.getsockname())
+            print("Success connected")
+            return client
+        except:
+            print("Connect unsucessful")
+            closeConnection(client)
+    else:
+        print("IP input is wrong!")
+        return False
 
 def closeConnection(client):
     off="X"

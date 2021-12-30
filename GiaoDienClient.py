@@ -15,7 +15,7 @@ window.iconbitmap('gold.ico')
 frame1 = gold.Frame(window)
 frame2 = gold.Frame(window)
 frame3 = gold.Frame(window)
-
+frame4 = gold.Frame(window)
 
 def checkLogin(client):
     account = []
@@ -37,13 +37,13 @@ def checkLogin(client):
         if(temp=="okee"):
             infoPage(client)
         else:
-            messagebox.showinfo("Warning!","Account or password was wrong.")
-            
+            messagebox.showinfo("Warning!","Account or password was wrong.")            
 
 def hide_frame():
     frame1.pack_forget()
     frame2.pack_forget()
     frame3.pack_forget()
+    frame4.pack_forget()
     
 def registerCheck(client):
     account = []
@@ -69,7 +69,35 @@ def registerCheck(client):
         else:
             messagebox.showinfo("Warning!","Register failed!")
 
-        
+def staticIP():
+    hide_frame()
+    menu=gold.Label(frame4,text='Gold Price', font=('Times new roman',25,'bold'),foreground='orange')
+    menu.place(x=260,y=20)
+    IP_label=gold.Label(frame4,text='Input IP server')
+    IP_label.place(x=135,y=100)
+
+    frame4.pack(fill="both",expand=1)
+
+    IPinput=StringVar()
+
+    IPinput=gold.Entry(frame4)
+    IPinput.place(x=230,y=100)
+    
+
+    button_connect=gold.Button(frame4,text="Connect",bg='orange',command=lambda:getIP())
+    button_connect.place(x=250,y=150)
+    
+    def getIP():
+        IPserver=IPinput.get()
+        client=c.startConnect(IPserver)
+        if(client==False):
+            messagebox.showinfo("Warning!","Input IP wrong!")  
+            staticIP()
+        else:
+            login_page(client)
+
+
+
 def registerAccount(client):
     hide_frame()
 
@@ -158,11 +186,10 @@ def closeWindow(client):
         window.destroy()
         c.closeConnection(client)
 
-def login_page():
+def login_page(client):
 
     hide_frame()
-
-    client=c.startConnect()
+        
 
     menu=gold.Label(frame1,text='Gold Price', font=('Times new roman',35),foreground='orange')
     menu.place(x=260,y=20)
@@ -194,5 +221,5 @@ def login_page():
     buttonRegister.place(x=370,y=170)
 
 #login_page(client)
-login_page()
+staticIP()
 window.mainloop()

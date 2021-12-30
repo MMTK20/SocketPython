@@ -43,12 +43,15 @@ def homePage():
     refresh_button = gold.Button(frame2,text = "Reload", bg='orange',width=8,command=seeConnection)
     refresh_button.place(x = 632, y=51) 
     
+    clients = gold.Label(frame2, text="Clients online:", font=("Arial",12))
+    clients.place(x=5, y=68)
+
     global board
     board = gold.Listbox(frame2,font = ("Times new roman",15), width=69, height=14)
     scrollbar  = gold.Scrollbar(frame2, orient="vertical", command=board.yview)
     board['yscroll'] = scrollbar.set
     scrollbar.place(in_=board, relx=1.0, relheight=1.0, bordermode="outside")
-    board.place(x=5, y=80)
+    board.place(x=5, y=88)
 
 homePage()
 

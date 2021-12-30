@@ -2,7 +2,7 @@ import socket
 import threading
 import API
 
-HOST = "127.0.0.1"
+HOST = socket.gethostbyname(socket.gethostname())
 PORT = 3702       
 addressofHOST = (HOST,PORT)
 FORMAT = "utf-8"
