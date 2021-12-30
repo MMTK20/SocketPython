@@ -55,13 +55,13 @@ def recvList(connection, option):
         if(item != "end"):
             list.append(item)
         else:
-            # In để kiểm tra
+
             print(list)
-            # Nếu option = 1 thì đi đến hàm login
+
             if(option == "login"):
                 if(list != []):
                     msgServer = "okee"
-            # nếu option = 0 thì đi đến hàm regis
+
             elif(option == "register"):
                 if(list!=[]):
                     msgServer = "okee"
