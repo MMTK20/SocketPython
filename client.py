@@ -30,12 +30,17 @@ def sendMessage(client,option,list):
             return msgcheck
 
     elif(option=="info" and list !=[]):
-        msgcheck=sendList(client,list)
-        if(msgcheck=="okee"):
-            return msgcheck
-        else:
-            print("Cannot found!")
-            return msgcheck
+        # msgcheck=sendList(client,list)
+        for item in list:
+            print("A:",item)
+            client.sendall(item.encode(FORMAT))
+        # if(msgcheck=="okee"):
+        #     return msgcheck
+        res = recvList(client,list)
+        print("B:",res)
+        # else:
+        #     print("Cannot found!")
+        #     return msgcheck
 
 
 def sendList(client,list):
@@ -49,6 +54,16 @@ def sendList(client,list):
             pass
     return msgServer
 
+def recvList(client,list):
+    result= []
+    item = client.recv(1024).decode(FORMAT)
+    while (item != "end"):
+        result.append(item)
+        client.sendall(item.encode(FORMAT))
+        item = client.recv(1024).decode(FORMAT)
+
+    print(result)
+    return result
 
 def startConnect(IPserver):
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

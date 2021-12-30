@@ -15,6 +15,7 @@ def Search(msg):
                 if (TYPE == i['type']): res.append(i)
     
     print(res)
+    return res
 
 msg = ['AVPL / DOJI CT lẻ', '20211227']
 Search(msg)

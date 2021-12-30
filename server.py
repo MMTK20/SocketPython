@@ -65,8 +65,11 @@ def RepeatCalling():
 
 def SendList(conn,list):
     for i in list:
-        conn.sendall(i.encode(FORMAT))
+        print("JSON:",type(json.dumps(i)))
+        conn.sendall(json.dumps(i).encode(FORMAT))
         conn.recv(1024)
+    msg = "end"
+    conn.sendall(msg.encode(FORMAT))
 
 def connectAllClient(connection, address):
   
@@ -91,9 +94,7 @@ def connectAllClient(connection, address):
             elif(msgClient == "info"):
                 recvList(connection, "info")
             elif(msgClient == "check"):
-                #Res là dữ liệu tìm kiếm được từ yêu cầu của client dưới dạng list
-                Res = Search(msgClient)
-                SendList(connection,Res)
+                
                 pass
             else:
                 temp = "stop"
@@ -132,7 +133,11 @@ def recvList(connection, option):
                 #Trong hàm CreaateDatabase nếu chưa có thông tin thì database sẽ câp nhật thêm, nếu đã tồn tại username thì print lỗi ra
                 CreateDatabase(list)
             elif(option =="info"):
-                msgServer="okee"
+                #Res là dữ liệu tìm kiếm được từ yêu cầu của client dưới dạng list
+                Res = Search(list)
+                print(type(Res))
+                # print("JSON:",type(Res))
+                SendList(connection,Res)
         print(msgServer)
         print(option)
         connection.sendall(msgServer.encode(FORMAT))
