@@ -138,7 +138,7 @@ def infoPage(client):
     label_title = gold.Label(frame2, text='Gold Price',font=("Times new roman", 30, "bold"), foreground= "orange")
     label_title.place(x=260,y=3)
 
-    logout_button = gold.Button(frame2, text='Logout',width=10,bg="red", command= login_page)
+    logout_button = gold.Button(frame2, text='Logout',width=10,bg="red", command=lambda: login_page(client))
     logout_button.place(x=245, y= 435)
 
     global showInfo
