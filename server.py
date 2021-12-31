@@ -64,12 +64,15 @@ def RepeatCalling():
     t.start()
 
 def SendList(conn,list):
-    for i in list:
-        print("JSON:",type(json.dumps(i)))
-        conn.sendall(json.dumps(i).encode(FORMAT))
-        conn.recv(1024)
-    msg = "end"
-    conn.sendall(msg.encode(FORMAT))
+    msgServer = None
+    list.append("end")
+    for item in list:
+        conn.sendall(json.dumps(item).encode(FORMAT))
+        try:
+            msgServer = conn.recv(1024).decode(FORMAT)
+        except:
+            pass
+    return msgServer
 
 def connectAllClient(connection, address):
   
@@ -134,9 +137,10 @@ def recvList(connection, option):
                 CreateDatabase(list)
             elif(option =="info"):
                 #Res là dữ liệu tìm kiếm được từ yêu cầu của client dưới dạng list
+                print("C:,",list)
                 Res = Search(list)
-                print(type(Res))
-                # print("JSON:",type(Res))
+                print(Res)
+                print("JSON:",type(Res))
                 SendList(connection,Res)
         print(msgServer)
         print(option)

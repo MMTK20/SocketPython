@@ -1,9 +1,30 @@
 import socket
+import json
 
 
 PORT = 3702        
 FORMAT = "utf-8"
+def sendList(client,list):
+    msgServer = None
+    list.append("end")
+    for item in list:
+        client.sendall(item.encode(FORMAT))
+        try:
+            msgServer = client.recv(1024).decode(FORMAT)
+        except:
+            pass
+    return msgServer
 
+def recvList(connection):
+    list = []
+    item = None
+    msgServer = "Failed!"
+    while(item != "end"):
+        item = connection.recv(1024).decode(FORMAT)
+        if(item != "end"):
+            list.append(json.loads(item))
+        else:
+            return list
 def sendMessage(client,option,list):
     client.sendall(option.encode(FORMAT))
     msg=client.recv(1024).decode(FORMAT)
@@ -30,40 +51,20 @@ def sendMessage(client,option,list):
             return msgcheck
 
     elif(option=="info" and list !=[]):
-        # msgcheck=sendList(client,list)
-        for item in list:
-            print("A:",item)
-            client.sendall(item.encode(FORMAT))
+        msgcheck=sendList(client,list)
+        # for item in list:
+        #     print("A:",item)
+        #     client.sendall(item.encode(FORMAT))
         # if(msgcheck=="okee"):
         #     return msgcheck
-        res = recvList(client,list)
+        res = recvList(client)
         print("B:",res)
         # else:
         #     print("Cannot found!")
         #     return msgcheck
 
 
-def sendList(client,list):
-    msgServer = None
-    list.append("end")
-    for item in list:
-        client.sendall(item.encode(FORMAT))
-        try:
-            msgServer = client.recv(1024).decode(FORMAT)
-        except:
-            pass
-    return msgServer
 
-def recvList(client,list):
-    result= []
-    item = client.recv(1024).decode(FORMAT)
-    while (item != "end"):
-        result.append(item)
-        client.sendall(item.encode(FORMAT))
-        item = client.recv(1024).decode(FORMAT)
-
-    print(result)
-    return result
 
 def startConnect(IPserver):
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

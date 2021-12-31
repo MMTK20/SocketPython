@@ -17,5 +17,5 @@ def Search(msg):
     print(res)
     return res
 
-msg = ['AVPL / DOJI CT lẻ', '20211227']
+msg = ['AVPL / DOJI CT buon', '20211228']
 Search(msg)
